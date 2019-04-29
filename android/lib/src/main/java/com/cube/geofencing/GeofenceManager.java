@@ -13,8 +13,11 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallbacks;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingClient;
 import com.google.android.gms.location.GeofencingRequest;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Collections;
 import java.util.List;
@@ -28,20 +31,14 @@ import static com.cube.geofencing.RNRegionMonitorModule.TAG;
 public class GeofenceManager implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 {
 	private GoogleApiClient googleApiClient;
+	private GeofencingClient mGeofencingClient;
 	private PendingIntent geofencePendingIntent;
 	private CountDownLatch countDownLatch = new CountDownLatch(1);
 
 	public GeofenceManager(@NonNull Context context)
 	{
-		googleApiClient = new GoogleApiClient.Builder(context).addConnectionCallbacks(this)
-		                                                      .addOnConnectionFailedListener(this)
-		                                                      .addApi(LocationServices.API)
-		                                                      .build();
-		googleApiClient.connect();
-
-		Intent intent = new Intent(context, RNRegionTransitionService.class);
-		// We use FLAG_UPDATE_CURRENT so that we get the same pending intent back when calling addGeofences() and removeGeofences().
-		geofencePendingIntent = PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		geofencePendingIntent = getGeofenceTransitionPendingIntent(context);
+		mGeofencingClient = LocationServices.getGeofencingClient(context);
 	}
 
 	@Override
@@ -64,22 +61,29 @@ public class GeofenceManager implements GoogleApiClient.ConnectionCallbacks, Goo
 		Log.d(TAG, "RNRegionMonitor Google client failed: " + connectionResult.getErrorMessage());
 	}
 
-	public void addGeofences(@NonNull List<Geofence> geofences, @NonNull ResultCallbacks<Status> callback) throws InterruptedException
+	public void removeGeofence(@NonNull String id, OnSuccessListener<Void> successListener, OnFailureListener failureListener)
 	{
-		countDownLatch.await();
+		mGeofencingClient.removeGeofences(Collections.singletonList(id))
+				.addOnSuccessListener(successListener)
+				.addOnFailureListener(failureListener);
+	}
+
+	public void addGeofences(@NonNull List<Geofence> geofences, OnSuccessListener<Void> successListener, OnFailureListener failureListener)
+	{
 		GeofencingRequest request = new GeofencingRequest.Builder().addGeofences(geofences).setInitialTrigger(Geofence.GEOFENCE_TRANSITION_ENTER).build();
-		LocationServices.GeofencingApi.addGeofences(googleApiClient, request, geofencePendingIntent).setResultCallback(callback);
+		mGeofencingClient.addGeofences(request, geofencePendingIntent)
+				.addOnSuccessListener(successListener)
+				.addOnFailureListener(failureListener);
 	}
 
-	public void clearGeofences(@NonNull ResultCallbacks<Status> callback) throws InterruptedException
-	{
-		countDownLatch.await();
-		LocationServices.GeofencingApi.removeGeofences(googleApiClient, geofencePendingIntent).setResultCallback(callback);
+	public void clearGeofences(OnSuccessListener<Void> successListener, OnFailureListener failureListener) {
+		mGeofencingClient.removeGeofences(geofencePendingIntent)
+				.addOnSuccessListener(successListener)
+				.addOnFailureListener(failureListener);
 	}
 
-	public void removeGeofence(@NonNull String id, @NonNull ResultCallbacks<Status> callback) throws InterruptedException
-	{
-		countDownLatch.await();
-		LocationServices.GeofencingApi.removeGeofences(googleApiClient, Collections.singletonList(id)).setResultCallback(callback);
+	private PendingIntent getGeofenceTransitionPendingIntent(Context context) {
+		Intent intent = new Intent(context, RNRegionTransitionService.class);
+		return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 }

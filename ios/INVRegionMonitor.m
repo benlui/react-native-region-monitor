@@ -18,6 +18,11 @@ NSString* INVRegionMonitorErrorDomain = @"INVRegionMonitorErrorDomain";
 
 RCT_EXPORT_MODULE()
 
++ (BOOL)requiresMainQueueSetup
+{
+    return NO;
+}
+
 - (void) dealloc {
     locationManager.delegate = nil;
 }

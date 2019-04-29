@@ -13,6 +13,8 @@ import com.facebook.react.bridge.ReadableMap;
 import com.google.android.gms.common.api.ResultCallbacks;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -50,29 +52,25 @@ public class RNRegionMonitorModule extends ReactContextBaseJavaModule
 			double longitude = location.getDouble("longitude");
 			final MonitoredRegion region = new MonitoredRegion(requestId, latitude, longitude, radiusMetres);
 			Geofence geofence = region.createGeofence();
-			geofenceManager.addGeofences(Collections.singletonList(geofence), new ResultCallbacks<Status>()
-			{
+			geofenceManager.addGeofences(Collections.singletonList(geofence), new OnSuccessListener<Void>() {
 				@Override
-				public void onSuccess(@NonNull Status status)
-				{
-					Log.d(TAG, "addCircularRegion: " + status);
-
+				public void onSuccess(Void aVoid) {
+					Log.d(TAG, "addCircularRegion: onSuccess");
 					data.addRegion(region);
 					data.save(getReactApplicationContext());
 					promise.resolve(null);
 				}
-
+			}, new OnFailureListener() {
 				@Override
-				public void onFailure(@NonNull Status status)
-				{
-					Log.d(TAG, "addCircularRegion: " + status);
-					promise.reject(Integer.toString(status.getStatusCode()), status.getStatusMessage());
+				public void onFailure(@NonNull Exception e) {
+					Log.d(TAG, "addCircularRegion: onFailure");
+					promise.reject(TAG, e.getMessage());
 				}
 			});
 		}
 		catch (Exception e)
 		{
-			promise.reject("addCircularRegion exeption", e);
+			promise.reject("addCircularRegion exception", e);
 		}
 	}
 
@@ -82,28 +80,25 @@ public class RNRegionMonitorModule extends ReactContextBaseJavaModule
 		try
 		{
 			Log.d(TAG, "clearRegions");
-			geofenceManager.clearGeofences(new ResultCallbacks<Status>()
-			{
+			geofenceManager.clearGeofences(new OnSuccessListener<Void>() {
 				@Override
-				public void onSuccess(@NonNull Status status)
-				{
-					Log.d(TAG, "clearRegions: " + status);
+				public void onSuccess(Void aVoid) {
+					Log.d(TAG, "clearRegions: onSuccess");
 					data.clearRegions();
 					data.save(getReactApplicationContext());
 					promise.resolve(null);
 				}
-
+			}, new OnFailureListener() {
 				@Override
-				public void onFailure(@NonNull Status status)
-				{
-					Log.d(TAG, "clearRegions: " + status);
-					promise.reject(Integer.toString(status.getStatusCode()), status.getStatusMessage());
+				public void onFailure(@NonNull Exception e) {
+					Log.d(TAG, "clearRegions: onFailure");
+					promise.reject(TAG, e.getMessage());
 				}
 			});
 		}
 		catch (Exception e)
 		{
-			promise.reject("clearRegions exeption", e);
+			promise.reject("clearRegions exception", e);
 		}
 	}
 
@@ -129,28 +124,25 @@ public class RNRegionMonitorModule extends ReactContextBaseJavaModule
 		try
 		{
 			Log.d(TAG, "removeCircularRegion: " + requestId);
-			geofenceManager.removeGeofence(requestId, new ResultCallbacks<Status>()
-			{
+			geofenceManager.removeGeofence(requestId, new OnSuccessListener<Void>() {
 				@Override
-				public void onSuccess(@NonNull Status status)
-				{
-					Log.d(TAG, "removeCircularRegion: " + status);
+				public void onSuccess(Void aVoid) {
+					Log.d(TAG, "removeCircularRegion: onSuccess");
 					data.removeRegion(requestId);
 					data.save(getReactApplicationContext());
 					promise.resolve(null);
 				}
-
+			}, new OnFailureListener() {
 				@Override
-				public void onFailure(@NonNull Status status)
-				{
-					Log.d(TAG, "removeCircularRegion: " + status);
-					promise.reject(Integer.toString(status.getStatusCode()), status.getStatusMessage());
+				public void onFailure(@NonNull Exception e) {
+					Log.d(TAG, "removeCircularRegion: onFailure");
+					promise.reject(TAG, e.getMessage());
 				}
 			});
 		}
 		catch (Exception e)
 		{
-			promise.reject("removeCircularRegion exeption", e);
+			promise.reject("removeCircularRegion exception", e);
 		}
 	}
 }

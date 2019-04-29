@@ -11,6 +11,8 @@ import com.cube.geofencing.model.PersistableData;
 import com.google.android.gms.common.api.ResultCallbacks;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.Geofence;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,22 +40,20 @@ public class RNRegionMonitorBootReceiver extends BroadcastReceiver
 
 		try
 		{
-			geofenceManager.addGeofences(geofences, new ResultCallbacks<Status>()
-			{
+			Log.d(TAG, "geofences size: " + geofences.size());
+			geofenceManager.addGeofences(geofences, new OnSuccessListener<Void>() {
 				@Override
-				public void onSuccess(@NonNull Status status)
-				{
+				public void onSuccess(Void aVoid) {
 					Log.d(TAG, "Restored geofences");
 				}
-
+			}, new OnFailureListener() {
 				@Override
-				public void onFailure(@NonNull Status status)
-				{
+				public void onFailure(@NonNull Exception e) {
 					Log.w(TAG, "Could not restore geofences");
 				}
 			});
 		}
-		catch (InterruptedException e)
+		catch (Exception e)
 		{
 			Log.e(TAG, e.getMessage(), e);
 		}

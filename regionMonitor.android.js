@@ -2,18 +2,10 @@ import {AppRegistry, NativeModules, PermissionsAndroid} from 'react-native';
 
 const {RNRegionMonitor} = NativeModules;
 
-let callbacks = [];
+var callbacks = [];
 
-AppRegistry.registerHeadlessTask("region-monitor-transition", () => {
-	return (geofenceEvent) => {
-		return new Promise((resolve, reject) => {
-			callbacks.forEach(callback => {
-				callback(geofenceEvent);
-			});
-			resolve();
-		});
-	}
-});
+// for backgorund, to allow custom callback in RegionMonitorTask.js file, default at the same level of index.js of your project
+AppRegistry.registerHeadlessTask("region-monitor-transition", () => require('../../RegionMonitorTask'));
 
 const permissionsCheck = () => {
 	return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then(permissionStatus => {

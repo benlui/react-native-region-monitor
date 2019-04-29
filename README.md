@@ -1,30 +1,24 @@
 # react-native-region-monitor
 
-A simple and easy to use geographical region monitoring API for React Native on iOS. Android is currently being tested.
+A simple and easy to use geographical region monitoring API for React Native on iOS and Android.
 
-## Getting started
+## **Getting started**
 
 ```
-$ npm install react-native-region-monitor --save
+$ npm install @benlui/react-native-region-monitor --save
 $ react-native link
 ```
 
-## Android
+## **Notes for Android implementation**
 
-We're currently testing the Android implemention and it's available under the `next` tag on npm. Please help us test and let us know if it works!
+1. Based on react-native-region-monitor@next, updated to use GeofencingClient as the main entry point for interacting with the geofencing APIs. (Reference: https://developers.google.com/android/reference/com/google/android/gms/location/GeofencingClient)
+2. for region monitoring in backgorund, you need to add a file RegionMonitorTask.js, default at the same level of index.js of your project, for customized callback for didEnter / didExit of a defined region
 
-To install:
+## **Notes for iOS implementation**
 
-```
-npm install react-native-region-monitor@next --save
-react-native link
-```
+1. It's important that you set `Privacy - Location Always Usage Description` (`NSLocationAlwaysUsageDescription`) and `Required background modes` (`UIBackgroundModes`) in your Info.plist. Otherwise, region monitoring will not function properly.
 
-## Info.plist
-
-It's important that you set `Privacy - Location Always Usage Description` (`NSLocationAlwaysUsageDescription`) and `Required background modes` (`UIBackgroundModes`) in your Info.plist or region monitoring will not function properly.
-
-## Usage
+## **Usage**
 
 Simply add a region and the library will automatically request the correct authorization and add the region afterwards.
 
@@ -47,7 +41,7 @@ regionMonitor.addCircularRegion(center, radius, identifier)
 	});
 ```
 
-## API Documentation
+## **API Documentation**
 
 #### `regionMonitor#addCircularRegion(center, radius, identifier)`
 - `center` `Object` The coordinate which defines the center location of the circular region.

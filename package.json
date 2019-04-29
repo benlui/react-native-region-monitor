@@ -1,11 +1,12 @@
 {
-  "name": "react-native-region-monitor",
-  "version": "2.0.0-alpha.2",
-  "description": "A simple and easy to use geographical region monitoring API for React Native.",
+  "name": "@hkpusits/react-native-region-monitor",
+  "version": "2.0.1",
+  "description": "A simple and easy to use geographical region monitoring API for React Native. (forked from martijndeh/react-native-region-monitor
+)",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/martijndeh/react-native-region-monitor"
+    "url": "https://github.com/benlui/react-native-region-monitor"
   },
   "scripts": {
     "release": "standard-version"

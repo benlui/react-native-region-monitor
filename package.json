@@ -1,5 +1,5 @@
 {
-  "name": "@hkpusits/react-native-region-monitor",
+  "name": "@hkpuits/react-native-region-monitor",
   "version": "2.0.1",
   "description": "A simple and easy to use geographical region monitoring API for React Native. (forked from martijndeh/react-native-region-monitor
 )",

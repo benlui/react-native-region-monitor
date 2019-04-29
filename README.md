@@ -5,7 +5,7 @@ A simple and easy to use geographical region monitoring API for React Native on 
 ## **Getting started**
 
 ```
-$ npm install @benlui/react-native-region-monitor --save
+$ npm install @hkpuits/react-native-region-monitor --save
 $ react-native link
 ```
 

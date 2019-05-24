@@ -5,7 +5,7 @@ const {RNRegionMonitor} = NativeModules;
 var callbacks = [];
 
 // for backgorund, to allow custom callback in RegionMonitorTask.js file, default at the same level of index.js of your project
-AppRegistry.registerHeadlessTask("region-monitor-transition", () => require('../../RegionMonitorTask'));
+AppRegistry.registerHeadlessTask("region-monitor-transition", () => require('../../../RegionMonitorTask'));
 
 const permissionsCheck = () => {
 	return PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION).then(permissionStatus => {

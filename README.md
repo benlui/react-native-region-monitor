@@ -11,7 +11,7 @@ $ react-native link
 
 ## **Notes for Android implementation**
 
-1. Open {ProjectRoot}/android/settings.gradle, and add '/lib' for the project dir. Like:
+1. Open '{ProjectRoot}/android/settings.gradle', and add '/lib' for the project dir. Like:
 ```gradle
 rootProject.name = 'YourProjectName'
 include ':@hkpuits_react-native-region-monitor'
@@ -19,8 +19,25 @@ project(':@hkpuits_react-native-region-monitor').projectDir = new File(rootProje
 
 include ':app'
 ```
-2. Based on react-native-region-monitor@next, updated to use GeofencingClient as the main entry point for interacting with the geofencing APIs. (Reference: https://developers.google.com/android/reference/com/google/android/gms/location/GeofencingClient)
-3. for region monitoring in backgorund, you need to add a file RegionMonitorTask.js, default at the same level of index.js of your project, for customized callback for didEnter / didExit of a defined region
+2. Add a file '{ProjectRoot}/RegionMonitorTask.js' for region monitoring in backgorund, default at the same level of index.js of your project, for customized callback for didEnter / didExit of a defined region
+```js
+module.exports = async (event) => {
+  const { didEnter, didExit, region } = event;
+  if (didEnter) {
+	// do something
+  } else if (didExit) {
+    // do something
+  }
+};
+```
+3. Add permission in '{ProjectRoot}/android/app/AndroidManifest.xml'
+```xml
+<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+```
+4. Based on react-native-region-monitor@next, updated to use GeofencingClient as the main entry point for interacting with the geofencing APIs. (Reference: https://developers.google.com/android/reference/com/google/android/gms/location/GeofencingClient)
 
 ## **Notes for iOS implementation**
 
@@ -31,7 +48,7 @@ include ':app'
 Simply add a region and the library will automatically request the correct authorization and add the region afterwards.
 
 ```js
-import regionMonitor from 'react-native-region-monitor';
+import regionMonitor from '@hkpuits/react-native-region-monitor';
 
 const center = {
 	latitude: 22.303858,

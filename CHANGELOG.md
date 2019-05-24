@@ -2,8 +2,8 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-<a name=""></a>
-@ 2.0.1
+<a name="2.0.3"></a>
+# 2.0.3 (2019-05-24)
 
 ### Bug Fixes / Enhancements
 * Based on react-native-region-monitor@next, updated to use GeofencingClient as the main entry point for interacting with the geofencing APIs. (Reference: https://developers.google.com/android/reference/com/google/android/gms/location/GeofencingClient)

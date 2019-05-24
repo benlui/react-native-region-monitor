@@ -11,8 +11,16 @@ $ react-native link
 
 ## **Notes for Android implementation**
 
-1. Based on react-native-region-monitor@next, updated to use GeofencingClient as the main entry point for interacting with the geofencing APIs. (Reference: https://developers.google.com/android/reference/com/google/android/gms/location/GeofencingClient)
-2. for region monitoring in backgorund, you need to add a file RegionMonitorTask.js, default at the same level of index.js of your project, for customized callback for didEnter / didExit of a defined region
+1. Open {ProjectRoot}/android/settings.gradle, and add '/lib' for the project dir. Like:
+```gradle
+rootProject.name = 'YourProjectName'
+include ':@hkpuits_react-native-region-monitor'
+project(':@hkpuits_react-native-region-monitor').projectDir = new File(rootProject.projectDir, '../node_modules/@hkpuits/react-native-region-monitor/android/lib')
+
+include ':app'
+```
+2. Based on react-native-region-monitor@next, updated to use GeofencingClient as the main entry point for interacting with the geofencing APIs. (Reference: https://developers.google.com/android/reference/com/google/android/gms/location/GeofencingClient)
+3. for region monitoring in backgorund, you need to add a file RegionMonitorTask.js, default at the same level of index.js of your project, for customized callback for didEnter / didExit of a defined region
 
 ## **Notes for iOS implementation**
 
@@ -26,8 +34,8 @@ Simply add a region and the library will automatically request the correct autho
 import regionMonitor from 'react-native-region-monitor';
 
 const center = {
-	latitude: 52.0834365,
-	longitude: 4.3121346,
+	latitude: 22.303858,
+	longitude: 114.1795898,
 };
 const radius = 1000;
 const identifier = 'MyRegionIdentifier';
@@ -64,8 +72,8 @@ On iOS, you can add up to 20 regions. This is a limit set by iOS. If you need to
 
 ```js
 const center = {
-	latitude: 52.0834365,
-	longitude: 4.3121346,
+	latitude: 22.303858,
+	longitude: 114.1795898,
 };
 const radius = 1000;
 const identifier = 'MyRegionIdentifier';

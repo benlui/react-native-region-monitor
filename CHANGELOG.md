@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.0.4"></a>
+# 2.0.4 (2019-06-25)
+
+### Bug Fixes / Enhancements
+* For iOS, adds logics to handle CLCircularRegion class event(s) notified by CLLocationManager only
+* For Android, adds logics for Android O
+
+
 <a name="2.0.3"></a>
 # 2.0.3 (2019-05-24)
 

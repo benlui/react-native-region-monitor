@@ -3,6 +3,7 @@ package com.cube.geofencing;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -37,6 +38,13 @@ public class GeofenceManager implements GoogleApiClient.ConnectionCallbacks, Goo
 
 	public GeofenceManager(@NonNull Context context)
 	{
+		/*
+		googleApiClient = new GoogleApiClient.Builder(context).addConnectionCallbacks(this)
+		                                                      .addOnConnectionFailedListener(this)
+		                                                      .addApi(LocationServices.API)
+		                                                      .build();
+		googleApiClient.connect();
+*/
 		geofencePendingIntent = getGeofenceTransitionPendingIntent(context);
 		mGeofencingClient = LocationServices.getGeofencingClient(context);
 	}
@@ -84,6 +92,11 @@ public class GeofenceManager implements GoogleApiClient.ConnectionCallbacks, Goo
 
 	private PendingIntent getGeofenceTransitionPendingIntent(Context context) {
 		Intent intent = new Intent(context, RNRegionTransitionService.class);
-		return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+			return PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		} else {
+			return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+		}
+		//return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 	}
 }

@@ -226,6 +226,10 @@ RCT_EXPORT_METHOD(clearRegions:(RCTPromiseResolveBlock)resolve
 
     [locationManager.monitoredRegions enumerateObjectsUsingBlock:^(__kindof CLRegion * _Nonnull region, BOOL * _Nonnull stop) {
         RCTLogInfo(@"Stop monitoring region %@", region.identifier);
+        if (![region isKindOfClass:[CLCircularRegion class]]) {
+          RCTLogInfo(@"clearRegions: NOT CLCircularRegion");
+          return;
+        }
         [locationManager stopMonitoringForRegion:region];
     }];
 
@@ -296,8 +300,13 @@ RCT_EXPORT_METHOD(requestAuthorization:(RCTPromiseResolveBlock)resolve
 - (void) locationManager:(CLLocationManager *)locationManager
        didDetermineState:(CLRegionState)state
                forRegion:(CLRegion *)region {
-    RCTLogInfo(@"locationManager:didDetermineState:forRegion: %d %@", state, region.identifier);
-    RCTLogInfo(@"Monitored regions %@", locationManager.monitoredRegions);
+    RCTLogInfo(@"locationManager:didDetermineState:forRegion: %ld %@", state, region);
+    //RCTLogInfo(@"Monitored regions %@", locationManager.monitoredRegions);
+  
+    if (![region isKindOfClass:[CLCircularRegion class]]) {
+      RCTLogInfo(@"locationManager:didDetermineState: NOT CLCircularRegion");
+      return;
+    }
 
     if (state == CLRegionStateUnknown) {
         // TODO: Should we add some sort of delay here?
@@ -371,6 +380,11 @@ monitoringDidFailForRegion:(CLRegion *)region
               withError:(NSError *)error {
     RCTLogInfo(@"monitoringDidFailForRegion:withError %@ %@!", region.identifier, error);
 
+    if (![region isKindOfClass:[CLCircularRegion class]]) {
+      RCTLogInfo(@"monitoringDidFailForRegion: NOT CLCircularRegion");
+      return;
+    }
+  
     // TODO: Check if we already have this region in the monitoredRegions?
     RCTLogInfo(@"%@", locationManager.monitoredRegions);
 
@@ -389,6 +403,11 @@ monitoringDidFailForRegion:(CLRegion *)region
 didStartMonitoringForRegion:(CLRegion *)region {
     RCTLogInfo(@"didStartMonitoringForRegion %@!", region.identifier);
 
+    if (![region isKindOfClass:[CLCircularRegion class]]) {
+      RCTLogInfo(@"didStartMonitoringForRegion: NOT CLCircularRegion");
+      return;
+    }
+  
     NSString *identifier = region.identifier;
     NSDictionary *pendingRegion = pendingRegions[identifier];
 

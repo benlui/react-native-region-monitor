@@ -1,6 +1,6 @@
 package com.cube.geofencing;
 
-import android.support.annotation.NonNull;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.cube.geofencing.model.MonitoredRegion;

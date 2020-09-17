@@ -3,7 +3,7 @@ package com.cube.geofencing;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import androidx.annotation.Nullable;
+import androidx.annotation.NonNull;
 import android.util.Log;
 
 import com.cube.geofencing.model.MonitoredRegion;

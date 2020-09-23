@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.1.2"></a>
+# 2.1.2 (2020-09-23)
+
+### Bug Fixes / Enhancements
+* For Android, add permision android.permission.ACCESS_BACKGROUND_LOCATION for Android API 29 or above
+
 <a name="2.1.1"></a>
 # 2.1.1 (2020-09-17)
 

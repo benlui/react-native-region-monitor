@@ -39,6 +39,8 @@ module.exports = async (event) => {
 <uses-permission android:name="android.permission.WAKE_LOCK" />
 <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+
 ```
 4. Based on react-native-region-monitor@next, updated to use GeofencingClient as the main entry point for interacting with the geofencing APIs. (Reference: https://developers.google.com/android/reference/com/google/android/gms/location/GeofencingClient)
 

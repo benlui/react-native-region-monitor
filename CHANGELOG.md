@@ -3,6 +3,12 @@
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
 <a name="2.1.2"></a>
+# 2.1.3 (2022-03-17)
+
+### Bug Fixes / Enhancements
+* Fix package.json
+
+<a name="2.1.2"></a>
 # 2.1.2 (2020-09-23)
 
 ### Bug Fixes / Enhancements

@@ -1,3 +1,6 @@
+[![npm](https://img.shields.io/npm/l/@hkpuits/react-native-region-monitor.svg)](https://github.com/benlui/react-native-region-monitor)
+[![npm](https://img.shields.io/npm/v/@hkpuits/react-native-region-monitor.svg)](https://www.npmjs.com/package/@hkpuits/react-native-region-monitor)
+
 # react-native-region-monitor
 
 A simple and easy to use geographical region monitoring API for React Native on iOS and Android.

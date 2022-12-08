@@ -93,7 +93,7 @@ public class GeofenceManager implements GoogleApiClient.ConnectionCallbacks, Goo
 	private PendingIntent getGeofenceTransitionPendingIntent(Context context) {
 		Intent intent = new Intent(context, RNRegionTransitionService.class);
 		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-			return PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            return PendingIntent.getForegroundService(context, 0, intent, PendingIntent.FLAG_MUTABLE);
 		} else {
 			return PendingIntent.getService(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 		}

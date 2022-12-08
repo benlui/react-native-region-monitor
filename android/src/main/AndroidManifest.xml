@@ -9,7 +9,7 @@
 	<application>
 		<service android:name="com.cube.geofencing.RNRegionTransitionService"/>
 
-		<receiver android:name="com.cube.geofencing.RNRegionMonitorBootReceiver">
+		<receiver android:name="com.cube.geofencing.RNRegionMonitorBootReceiver" android:exported="true">
 			<intent-filter>
 				<action android:name="android.intent.action.BOOT_COMPLETED"/>
 			</intent-filter>

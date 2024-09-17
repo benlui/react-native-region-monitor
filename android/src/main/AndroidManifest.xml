@@ -5,9 +5,14 @@
 	<uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
 	<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING" />
 
 	<application>
-		<service android:name="com.cube.geofencing.RNRegionTransitionService"/>
+		<service
+            android:name="com.cube.geofencing.RNRegionTransitionService"
+            android:foregroundServiceType="remoteMessaging"
+            android:exported="false" />
 
 		<receiver android:name="com.cube.geofencing.RNRegionMonitorBootReceiver" android:exported="true">
 			<intent-filter>

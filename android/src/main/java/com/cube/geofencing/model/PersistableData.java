@@ -31,6 +31,9 @@ public class PersistableData
 	private static Kryo createSerialiser()
 	{
 		Kryo serialiser = new Kryo();
+        serialiser.register(PersistableData.class);
+        serialiser.register(java.util.HashMap.class);
+        serialiser.register(com.cube.geofencing.model.MonitoredRegion.class);
 		serialiser.setDefaultSerializer(TaggedFieldSerializer.class);
 		return serialiser;
 	}

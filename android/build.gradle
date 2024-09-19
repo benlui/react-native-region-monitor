@@ -53,7 +53,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "com.esotericsoftware:kryo:4.0.0"
+    implementation "com.esotericsoftware:kryo:5.6.0"
     implementation 'com.facebook.react:react-native:+'
     implementation "com.google.android.gms:play-services-location:21.0.1"
 }

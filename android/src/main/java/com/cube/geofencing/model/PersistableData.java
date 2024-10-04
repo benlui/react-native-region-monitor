@@ -8,6 +8,7 @@ import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryo.io.Input;
 import com.esotericsoftware.kryo.io.Output;
 import com.esotericsoftware.kryo.serializers.TaggedFieldSerializer;
+import com.esotericsoftware.kryo.util.DefaultInstantiatorStrategy;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -20,6 +21,8 @@ import java.util.Map;
 
 import static com.cube.geofencing.RNRegionMonitorModule.TAG;
 
+import org.objenesis.strategy.StdInstantiatorStrategy;
+
 /**
  * Created by tim on 19/01/2017.
  */
@@ -31,6 +34,7 @@ public class PersistableData
 	private static Kryo createSerialiser()
 	{
 		Kryo serialiser = new Kryo();
+        serialiser.setInstantiatorStrategy(new DefaultInstantiatorStrategy(new StdInstantiatorStrategy()));
         serialiser.register(PersistableData.class);
         serialiser.register(java.util.HashMap.class);
         serialiser.register(com.cube.geofencing.model.MonitoredRegion.class);

@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="2.2.3"></a>
+# 2.2.3 (2024-10-04)
+
+### Bug Fixes / Enhancements
+* [Android] update to use FOREGROUND_SERVICE_REMOTE_MESSAGING
+* [Android] fix could not deserialise geofencing data exception when device reboot
+
+<a name="2.2.2"></a>
+# 2.2.2 (2024-09-19)
+
+### Bug Fixes / Enhancements
+* [Android] Update to support Android Sdk Version 34+
+
 <a name="2.1.5"></a>
 # 2.1.5 (2022-12-08)
 
